@@ -98,21 +98,56 @@ angular.module("colas",[])
 	
 <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">	
     <form role="form">
-    <h2>Registro de nueva atencion</h2>
-        <select class = "form-control" ng-model="nueva_atencion.user_id" ng-options="item.id as item.name for item in usuarios track by item.id">
-            <option value="">Temporalmente seleccione un usuario</option>
-        </select><br/>
-        <select class = "form-control" ng-model="empresa" ng-options="item.id as item.nombre for item in empresas track by item.id" ng-change="listar_listas()">
-            <option value="">Seleccione una empresa</option>
-        </select><br/>
-        <select class = "form-control" ng-model="nueva_atencion.lista_id" ng-options="item.id as item.nombre for item in listas track by item.id">
-            <option value="">Seleccione una lista</option>
-        </select><br/>
-    	<select class = "form-control" ng-model="nueva_atencion.modo" >
-            <option value="">Seleccione un modo de recepcion</option>
-            <option value="correo">correo</option>
-            <option value="sms">sms</option>
-        </select><br/>
+    <h2>Atencion de colas</h2>
+        
+        
+        
+<ul id = "myTab" class = "nav nav-tabs">
+   <li class = "active">
+      <a href = "#home" data-toggle = "tab">
+         Tutorial Point Home
+      </a>
+   </li>
+   
+   <li><a href = "#ios" data-toggle = "tab">iOS</a></li>
+	
+   
+</ul>
+
+<div id = "myTabContent" class = "tab-content">
+
+   <div class = "tab-pane fade in active" id = "home">
+     
+     
+     <div class="cont-img">
+         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
+         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
+         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="100" height="100" />
+         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
+         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
+         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
+     </div>
+     
+     
+   </div>
+   
+   <div class = "tab-pane fade" id = "ios">
+      <p>iOS is a mobile operating system developed and distributed 
+         by Apple Inc. Originally released in 2007 for the iPhone, iPod Touch,
+         and Apple TV. iOS is derived from OS X, with which it shares the 
+         Darwin foundation. iOS is Apple's mobile version of the OS X 
+         operating system used on Apple computers.</p>
+   </div>
+   
+</div>
+        
+        
+        
+        
+            
+        
+        
+        <br/>
     	<a href = "#" class = "btn btn-default" role = "button" ng-click="registrar_atencion()">Registrar</a>
     	<a href = "/views/listar_atenciones.html" class = "btn btn-default" role = "button" >Regresar</a>
     </form>
