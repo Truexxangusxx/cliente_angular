@@ -13,31 +13,19 @@
 	
 <script>
 
+$(function () { $(".tooltip-options img").tooltip({html : true });});
+
 angular.module("colas",[])
 	.controller("atencion_controller", function($scope, $http,$window){
-		$scope.atencion = {};
-		$scope.empresas = {};
+		$scope.atencions = {};
 		$scope.listas = {};
 		$scope.usuarios = {};
 		
 		
-		
-		$http({
-		        url: "http://uxkkff16f65f.xxangusxx.koding.io:8000/empresas",
-		        method: "GET"
-		    })
-        		.success(function(data){
-                    $scope.empresas=data;
-        		})
-        		.error(function(err){
-        			console.log(err);
-        		});
-        		
-        		
         $http({
 		        url: "http://uxkkff16f65f.xxangusxx.koding.io:8000/users",
 		        method: "GET",
-		        params: {"colaborador":0}
+		        params: {"colaborador":1}
 		    })
         		.success(function(data){
                     $scope.usuarios=data;
@@ -48,16 +36,32 @@ angular.module("colas",[])
 		
 		
 		
-		
-		$scope.registrar_atencion=function(){
+		$scope.mostrar_cola=function(){
 		    
 		    $http({
-		        url: "http://uxkkff16f65f.xxangusxx.koding.io:8000/atencions/create",
+		        url: "http://uxkkff16f65f.xxangusxx.koding.io:8000/obtener_lista",
 		        method: "GET",
-		        params: $scope.nueva_atencion
+		        params: $scope.user
 		    })
         		.success(function(data){
-                    alert(data);
+                    $scope.atencions=data;
+                    console.log($scope.atencions);
+        		})
+        		.error(function(err){
+        			console.log(err);
+        		});
+		}
+		
+		
+		$scope.atender_atencion=function(estado){
+		    
+		    $http({
+		        url: "http://uxkkff16f65f.xxangusxx.koding.io:8000/atender_atencion",
+		        method: "GET",
+		        params: {"estado_id":estado,"id":$scope.atencions[0].id}
+		    })
+        		.success(function(data){
+                    alert("atendido!!!, refresca la pagina");
         		})
         		.error(function(err){
         			console.log(err);
@@ -67,11 +71,12 @@ angular.module("colas",[])
 		$scope.listar_listas=function(){
 		    
 		    $http({
-		        url: "http://uxkkff16f65f.xxangusxx.koding.io:8000/listas",
+		        url: "http://uxkkff16f65f.xxangusxx.koding.io:8000/listas_por_user",
 		        method: "GET",
-		        params: {"empresa_id":$scope.empresa}
+		        params: $scope.user
 		    })
         		.success(function(data){
+        		    console.log(data);
                     $scope.listas=data;
         		})
         		.error(function(err){
@@ -100,56 +105,29 @@ angular.module("colas",[])
     <form role="form">
     <h2>Atencion de colas</h2>
         
+     <select class = "form-control" ng-model="user.user_id" ng-options="item.id as item.name for item in usuarios track by item.id"  ng-change="listar_listas()">
+            <option value="">Temporalmente seleccione un usuario</option>
+     </select><br/>
+     <select class = "form-control" ng-model="user.lista_id" ng-options="item.id as item.nombre for item in listas track by item.id" ng-change="mostrar_cola()">
+            <option value="">Seleccione una lista</option>
+        </select><br/>
+    <div align="center" class="cont-img" style="padding:20px 0px 20px 0px;">
+    
+        <img style="margin: 5px;" class="img-responsive" src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50">
+        <span ng-repeat-start="atencion in atencions" ng-if="$first" big>
+            <div style="border: 1.5px solid black;">{{atencion.user.name}}<img data-placement = "right" data-toggle = "tooltip" title = "<h3>Jose Arturo Arias Davila</h3><h2>BVC32</h2>" style="margin: 5px;" class="img-responsive" src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="100" height="100">{{atencion.numero}}</div>
+        </span>
+        <span ng-repeat-end ng-if="!$first">
+            <img style="margin: 5px;" class="img-responsive" src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50">{{atencion.numero}}
+        </span>
         
-        
-<ul id = "myTab" class = "nav nav-tabs">
-   <li class = "active">
-      <a href = "#home" data-toggle = "tab">
-         Tutorial Point Home
-      </a>
-   </li>
+    </div>
    
-   <li><a href = "#ios" data-toggle = "tab">iOS</a></li>
-	
-   
-</ul>
-
-<div id = "myTabContent" class = "tab-content">
-
-   <div class = "tab-pane fade in active" id = "home">
-     
-     
-     <div class="cont-img">
-         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
-         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
-         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="100" height="100" />
-         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
-         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
-         <img src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973461__180.png" width="50" height="50" />
-     </div>
-     
-     
-   </div>
-   
-   <div class = "tab-pane fade" id = "ios">
-      <p>iOS is a mobile operating system developed and distributed 
-         by Apple Inc. Originally released in 2007 for the iPhone, iPod Touch,
-         and Apple TV. iOS is derived from OS X, with which it shares the 
-         Darwin foundation. iOS is Apple's mobile version of the OS X 
-         operating system used on Apple computers.</p>
-   </div>
-   
-</div>
-        
-        
-        
-        
-            
-        
+    
         
         <br/>
-    	<a href = "#" class = "btn btn-default" role = "button" ng-click="registrar_atencion()">Registrar</a>
-    	<a href = "/views/listar_atenciones.html" class = "btn btn-default" role = "button" >Regresar</a>
+    	<a href = "#" class = "btn btn-default" role = "button" ng-click="atender_atencion(2)">Atendido</a>
+    	<a href = "#" class = "btn btn-default" role = "button" ng-click="atender_atencion(3)">Ausente</a>
     </form>
 </div>
 
